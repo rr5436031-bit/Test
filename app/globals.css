@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================= Android WebView / game-shell hardening ================= */
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;               /* no vertical/horizontal scrollbar */
+  overscroll-behavior: none;       /* no bounce/scroll-chaining */
+  background: #0a0a0f;
+  touch-action: none;              /* disables pinch-zoom & double-tap-zoom gestures */
+}
+
+#__next, .app-root {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent; /* no tap flash */
+  -webkit-touch-callout: none;              /* no long-press context menu on links/images */
+}
+
+.no-select, button, .ui-layer {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;               /* no text selection on UI */
+}
+
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;               /* re-enable selection only where users actually type */
+}
+
+/* Safe-area padding so UI never sits under a notch / cutout in landscape */
+.safe-area {
+  padding-left: max(env(safe-area-inset-left), 12px);
+  padding-right: max(env(safe-area-inset-right), 12px);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Prevent the on-screen keyboard (rare, e.g. name entry) from shifting the layout */
+.viewport-lock {
+  height: 100dvh;
+  width: 100dvw;
+}
